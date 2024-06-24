@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ogr.stepik</groupId>
+    <artifactId>stepik-webserver</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+    <modules>
+        <module>L1.1 Simple web server</module>
+        <module>L2.1 Authorization</module>
+        <module>L3.1 JDBC</module>
+        <module>L3.2 ORM</module>
+        <module>L4.1 WebSockets</module>
+        <module>L5.1 Tests</module>
+        <module>L6.1 Properties</module>
+        <module>L6.2 IO</module>
+        <module>L6.3 XML</module>
+        <module>L6.4 NIO</module>
+        <module>L7.1 Run</module>
+        <module>L7.2 Race</module>
+
+        <module>L6.0 Homework</module>
+        <module>L7.0 Homework</module>
+        <module>L7.3 MS</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <!--На этой версии можно отдельно скомпилировать, и потом запустить "assembly:single"-->
+                <version>2.2-beta-5</version>
+
+                <!--На этой (2.6) уже нужно "assembly:assembly", иначе с "assembly:single" класс файлы не добавятся в jar-->
+                <!--<version>2.6</version>-->
+
+                <!--На более новых версиях (3.0.0+) нужно исключительно составной коммандой "mvn compile assembly:single"
+                    Иначе опять jar будет без _наших_ класс файлов-->
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <outputDirectory>${basedir}</outputDirectory>
+                    <finalName>server</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <archive>
+                        <manifest>
+                            <mainClass>main.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
