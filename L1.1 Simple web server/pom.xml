@@ -8,32 +8,46 @@
     <artifactId>L1.1</artifactId>
     <version>1.0</version>
 
-	<properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-	
-	
+    <parent>
+        <groupId>ogr.stepik</groupId>
+        <artifactId>stepik-webserver</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <outputDirectory>${basedir}</outputDirectory>
-                    <finalName>server</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
+                   <!-- <workingDirectory>${project.build.directory} </workingDirectory> -->
+                    <mainClass>main.Main</mainClass>
+                    <includeProjectDependencies>true</includeProjectDependencies>
+                </configuration>
+            </plugin>
+
+            <plugin> <!-- но в jar'у все равно не хватает зависимостей на сеервлеты и фримейкер
+                            надо юзать assembly:single http://logicbig.com/tutorials/apache-maven/assembly-plugin/
+                            -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
                     <archive>
                         <manifest>
                             <mainClass>main.Main</mainClass>
+                            <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
                 </configuration>
@@ -45,7 +59,7 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.20</version>
+            <version>2.3.23</version>
         </dependency>
 
         <dependency>
@@ -59,7 +73,6 @@
             <artifactId>jetty-webapp</artifactId>
             <version>9.3.0.M0</version>
         </dependency>
-
     </dependencies>
 
 </project>
